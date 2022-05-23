@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rocketmq-slf4j-shaded</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>jul-to-slf4j</module>
+        <module>slf4j-api</module>
+    </modules>
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
