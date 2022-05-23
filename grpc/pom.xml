@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>rocketmq-deps</artifactId>
-        <groupId>io.github.aliyun-mq</groupId>
+        <groupId>org.apache.rocketmq</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,7 +16,7 @@
         <!-- rename dynamic link library for shade -->
         <classesShadedDir>${project.build.directory}/classes-shaded</classesShadedDir>
         <classesShadedNativeDir>${classesShadedDir}/META-INF/native</classesShadedNativeDir>
-        <shadingNettyNativePrefix>io_github_aliyunmq_shaded</shadingNettyNativePrefix>
+        <shadingNettyNativePrefix>org_apache_rocketmq_shaded</shadingNettyNativePrefix>
         <shadeJarName>${project.build.finalName}.${project.packaging}</shadeJarName>
     </properties>
 
@@ -116,19 +116,19 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.slf4j</pattern>
-                                    <shadedPattern>io.github.aliyunmq.shaded.org.slf4j</shadedPattern>
+                                    <shadedPattern>org.apache.rocketmq.shaded.org.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>io.grpc.netty.shaded.io.grpc</pattern>
-                                    <shadedPattern>io.github.aliyunmq.shaded.grpc</shadedPattern>
+                                    <shadedPattern>org.apache.rocketmq.shaded.grpc</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>io.grpc</pattern>
-                                    <shadedPattern>io.github.aliyunmq.shaded.io.grpc</shadedPattern>
+                                    <shadedPattern>org.apache.rocketmq.shaded.io.grpc</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.apache.commons</pattern>
-                                    <shadedPattern>io.github.aliyunmq.shaded.commons</shadedPattern>
+                                    <shadedPattern>org.apache.rocketmq.shaded.commons</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
