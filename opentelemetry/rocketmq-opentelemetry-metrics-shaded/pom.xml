@@ -3,24 +3,41 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>rocketmq-slf4j-shaded</artifactId>
+        <artifactId>rocketmq-opentelemetry-shaded</artifactId>
         <groupId>org.apache.rocketmq</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rocketmq-jul-to-slf4j-shaded</artifactId>
+    <artifactId>rocketmq-opentelemetry-metrics-shaded</artifactId>
 
     <properties>
         <maven.compiler.release>8</maven.compiler.release>
+        <shade-prefix>org.apache.rocketmq.shaded</shade-prefix>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp-metrics</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -38,14 +55,34 @@
                             <createSourcesJar>true</createSourcesJar>
                             <shadeSourcesContent>true</shadeSourcesContent>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.slf4j</pattern>
-                                    <shadedPattern>org.apache.rocketmq.shaded.org.slf4j</shadedPattern>
+                                    <pattern>io.opentelemetry</pattern>
+                                    <shadedPattern>org.apache.rocketmq.shaded.io.opentelemetry</shadedPattern>
                                 </relocation>
                             </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <delete
+                                    file="${project.build.directory}/original-${project.artifactId}}-${project.version}.jar"/>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
@@ -68,5 +105,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
